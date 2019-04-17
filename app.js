@@ -2,6 +2,7 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 var app = express();
+const nasa = require('./nasa');
 
 const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
@@ -29,6 +30,24 @@ app.get('/', (Request,Response) => {
     });
 });
 
+app.get('/gallery',(request,Response) => {
+    Response.render('gallery.hbs', {
+        title: 'Gallery',
+        main: 'Hello',
+        year: new Date().getFullYear()
+    })
+});
+nasa.getNum(5).then((result) => {
+    console.log(result['deck_id'])
+    var deck_id = result['deck_id']
+    console.log(result['cards'])
+    url=`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=5`
+
+});
+
+// nasa.getImage().then((result)=>{
+//     console.log(result)
+// })
 
 
 
